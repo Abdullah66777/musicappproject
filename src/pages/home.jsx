@@ -20,7 +20,7 @@ const Home = () => {
 
   useEffect(() => {
     console.log("Effect ran");
-    fetchLyrics("Coldplay", "Adventure of a Lifetime");
+    fetchLyrics("ed sheeran", "perfect");
   }, []);
 
   const formatLyrics = (lyrics) => {
@@ -34,31 +34,40 @@ const Home = () => {
         providing the artist name and song title
       </h2>
       <div>
-        <input
-          className="search"
-          type="text"
-          value={artistname}
-          placeholder="provide artist name"
-          onChange={(e) => setArtistName(e.target.value)}
-        />
-        <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault(); // Prevent the default form submission
+            if (artistname && songname) {
+              fetchLyrics(artistname, songname); // Call your function to fetch lyrics
+            }
+          }}
+        >
           <input
             className="search"
             type="text"
-            value={songname}
-            placeholder="provide song name"
-            onChange={(i) => setSongName(i.target.value)}
+            value={artistname}
+            placeholder="provide artist name"
+            onChange={(e) => setArtistName(e.target.value)}
+            required
           />
-        </div>
-        <button
-          className="button-17"
-          onClick={() => fetchLyrics(artistname, songname)}
-        >
-          search lyrics
-        </button>
-        <div className={`lyrics ${showLyrics ? "visible" : ""}`}>
-          {formatLyrics(lyrics)}
-        </div>
+
+          <div>
+            <input
+              className="search"
+              type="text"
+              value={songname}
+              placeholder="provide song name"
+              onChange={(i) => setSongName(i.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="button-17">
+            Search Lyrics
+          </button>
+          <div className={`lyrics ${showLyrics ? "visible" : ""}`}>
+            {formatLyrics(lyrics)}
+          </div>
+        </form>
       </div>
     </div>
   );
