@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
+import Home from "./pages/home.jsx";
+import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const App = () => {
-  const [lyrics, setLyrics] = useState("");
-
-  const API_URL = "https://api.lyrics.ovh/v1/";
-
-  const fetchLyrics = async (artist, title) => {
-    const response = await fetch(
-      `${API_URL}${encodeURIComponent(artist)}/${encodeURIComponent(title)}`
-    );
-    const result = await response.json();
-    console.log(result);
-  };
-
-  useEffect(() => {
-    console.log("Effect ran");
-    fetchLyrics("Coldplay", "Adventure of a Lifetime");
-  }, []);
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;
